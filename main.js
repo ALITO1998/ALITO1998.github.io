@@ -222,22 +222,22 @@ function setNumOfQuestion(value) {
             numOfQuestion = 3;
             break;
         case "two":
-            numOfQuestion = 3;
-            break;
-        case "three":
             numOfQuestion = 4;
             break;
+        case "three":
+            numOfQuestion = 5;
+            break;
         case "four":
-            numOfQuestion = 5;
-            break;
-        case "fifth":
-            numOfQuestion = 5;
-            break;
-        case "six":
             numOfQuestion = 6;
             break;
-        case "seven":
+        case "fifth":
+            numOfQuestion = 7;
+            break;
+        case "six":
             numOfQuestion = 8;
+            break;
+        case "seven":
+            numOfQuestion = 9;
             break;
     }
 }
