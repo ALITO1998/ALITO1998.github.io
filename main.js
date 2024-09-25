@@ -19,9 +19,11 @@ submitBtn.onmouseleave = () => {
 }
 
 submitBtn.onclick = () => {
-    if (nameInput.value !== "" && ageInput.value !== "") {
+    if (nameInput.value !== "" && ageInput.value !== "" && !isNaN(parseInt(ageInput.value)) && parseInt(ageInput.value) >= 3 && parseInt(ageInput.value) <= 90) {
         setNumOfQuestion(levelSelector.options[levelSelector.selectedIndex].value);
         goToQuiz();
+    } else {
+        alert("برجاء مراجعة البيانات \n علما بأن : \n*العمر من 3 سنوات ل90 سنه\n*وجميع الحقول مطلوبة ")
     }
 }
 
@@ -116,7 +118,11 @@ function saveData() {
     student.nameStd = nameInput.value;
     student.ageStd = parseInt(ageInput.value);
     student.levelStd = levelSelector.options[levelSelector.selectedIndex].value;
-    student.rate = Math.ceil(calculateRate());
+    if (isNaN(parseInt(calculateRate()))) {
+        student.rate = calculateRate();
+    } else {
+        student.rate = Math.ceil(calculateRate());
+    }
     let ok = confirm(`  الإسم : ${student.nameStd}
         السن : ${student.ageStd}
         المستوى : ${student.levelStd}
@@ -144,10 +150,11 @@ function calculateRate() {
             totalRate += telawa;
             console.log(totalRate);
         }
-        return (totalRate / (2 * numOfQuestion)) * 10;
     }
-
+    return (totalRate / (2 * numOfQuestion)) * 10;
 }
+
+
 
 function nextStudent() {
     nameInput.value = "";
@@ -209,7 +216,13 @@ function showResult() {
 
 function isfinish() {
     for (let i = 0; i < numOfQuestion; i++) {
-        if (isNaN(parseInt(document.getElementById(`hefzeRate${i + 1}`).value)) || isNaN(parseInt(document.getElementById(`telawaRate${i + 1}`).value))) {
+        if (isNaN(parseInt(document.getElementById(`hefzeRate${i + 1}`).value)) ||
+            isNaN(parseInt(document.getElementById(`telawaRate${i + 1}`).value)) ||
+            parseInt(document.getElementById(`hefzeRate${i + 1}`).value) > 10 ||
+            parseInt(document.getElementById(`telawaRate${i + 1}`).value) > 10 ||
+            parseInt(document.getElementById(`hefzeRate${i + 1}`).value) < 0 ||
+            parseInt(document.getElementById(`telawaRate${i + 1}`).value) < 0) {
+            alert("برجاء مراجعة التقيمات \n علما بأن : \n*التقييم من 0 ل 10 \n*وجميع التقيمات لازمة")
             return false;
         }
     }
