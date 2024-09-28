@@ -10,6 +10,14 @@ let students = [];
 let finish = false;
 
 
+
+if (localStorage.getItem("Students") !== null) {
+    students = JSON.parse(localStorage.getItem("Students"));
+    showResult();
+}
+
+
+
 submitBtn.onmouseenter = () => {
     submitBtn.style.opacity = 1;
 }
@@ -118,11 +126,8 @@ function saveData() {
     student.nameStd = nameInput.value;
     student.ageStd = parseInt(ageInput.value);
     student.levelStd = levelSelector.options[levelSelector.selectedIndex].value;
-    if (isNaN(parseInt(calculateRate()))) {
-        student.rate = calculateRate();
-    } else {
-        student.rate = Math.ceil(calculateRate());
-    }
+    student.rate = Math.ceil(calculateRate());
+
     let ok = confirm(`  الإسم : ${student.nameStd}
         السن : ${student.ageStd}
         المستوى : ${student.levelStd}
@@ -130,6 +135,8 @@ function saveData() {
     if (ok) {
         let std = student
         students.push(std);
+        const myJson = JSON.stringify(students);
+        localStorage.setItem("Students", myJson);
         if (oldLength < students.length) {
             questionDiv.innerHTML = "";
             showResult();
@@ -150,8 +157,8 @@ function calculateRate() {
             totalRate += telawa;
             console.log(totalRate);
         }
+        return (totalRate / (2 * numOfQuestion)) * 10;
     }
-    return (totalRate / (2 * numOfQuestion)) * 10;
 }
 
 
@@ -171,33 +178,40 @@ function showResult() {
     let dataperant = document.getElementById("result-div");
     let toExcelBtn = document.getElementById("toexcel");
     let dataTable = document.getElementById("result-show");
-    let row = document.createElement("tr");
-    let index = students.length - 1;
+    //let row = document.createElement("tr");
     if (dataperant !== null) {
         dataperant.style.display = "block";
     }
-    students.forEach((ele, i) => {
-        if (i === index) {
-            let nameData = document.createElement("td");
-            let ageData = document.createElement("td");
-            let levelData = document.createElement("td");
-            let rateData = document.createElement("td");
+    dataTable.innerHTML = `<thead id="header">
+                <tr>
+                <th scope="col">الاسم</th>
+                <th scope="col">السن</th>
+                <th scope="col">المستوى</th>
+                <th scope="col">النتيجة</th>
+                </tr>
+                </thead>`;
+    students.forEach((ele) => {
+        let row = document.createElement("tr");
+        let nameData = document.createElement("td");
+        let ageData = document.createElement("td");
+        let levelData = document.createElement("td");
+        let rateData = document.createElement("td");
 
-            nameData.scope = "col";
-            ageData.scope = "col";
-            levelData.scope = "col";
-            rateData.scope = "col";
+        nameData.scope = "col";
+        ageData.scope = "col";
+        levelData.scope = "col";
+        rateData.scope = "col";
 
-            nameData.innerText = ele.nameStd
-            ageData.innerText = ele.ageStd;
-            levelData.innerText = ele.levelStd;
-            rateData.innerText = ele.rate;
+        nameData.innerText = ele.nameStd
+        ageData.innerText = ele.ageStd;
+        levelData.innerText = ele.levelStd;
+        rateData.innerText = ele.rate;
 
-            row.appendChild(nameData);
-            row.appendChild(ageData);
-            row.appendChild(levelData);
-            row.appendChild(rateData);
-        }
+        row.appendChild(nameData);
+        row.appendChild(ageData);
+        row.appendChild(levelData);
+        row.appendChild(rateData);
+        dataTable.appendChild(row);
     })
     toExcelBtn.onmouseenter = () => {
         toExcelBtn.style.opacity = 1;
@@ -211,7 +225,6 @@ function showResult() {
         let wb = XLSX.utils.table_to_book(dataTable);
         XLSX.writeFile(wb, fileName);
     }
-    dataTable.appendChild(row);
 }
 
 function isfinish() {
@@ -253,4 +266,12 @@ function setNumOfQuestion(value) {
             numOfQuestion = 9;
             break;
     }
+}
+
+function addToResults(myJson) {
+    fs.writeFile('Result.json', myJson, (err) => {
+        if (err) throw err;
+        console.log('Replaced!')
+    }
+    );
 }
