@@ -14,23 +14,13 @@ body {
 }
 
 .submit {
-  display: block;
   background-color: green;
   border: none;
   border-radius: 1rem;
   margin-right: 42%;
+  margin-top: 2%;
   opacity: 0.6;
-  -webkit-border-radius: 1rem;
-  -moz-border-radius: 1rem;
-  -ms-border-radius: 1rem;
-  -o-border-radius: 1rem;
 }
-/* .rate-counter {
-  font-size: 3rem;
-  height: 4rem;
-  width: 4rem;
-  margin: 0.5rem 0rem 0.7rem 0.7rem;
-} */
 
 .rate-form {
   display: none;

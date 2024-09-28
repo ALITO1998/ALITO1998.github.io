@@ -8,7 +8,9 @@ let questionDiv = document.getElementById("rate");
 let numOfQuestion = 3
 let students = [];
 let finish = false;
-
+let toArchiveBtn = document.getElementById("toArchive");
+let toTrashBtn = document.getElementById("toTrash");
+let dataperant = document.getElementById("result-div");
 
 
 if (localStorage.getItem("Students") !== null) {
@@ -16,6 +18,21 @@ if (localStorage.getItem("Students") !== null) {
     showResult();
 }
 
+toArchiveBtn.onmouseenter = () => {
+    toArchiveBtn.style.opacity = 1;
+}
+
+toArchiveBtn.onmouseleave = () => {
+    toArchiveBtn.style.opacity = .6;
+}
+
+toTrashBtn.onmouseenter = () => {
+    toTrashBtn.style.opacity = 1;
+}
+
+toTrashBtn.onmouseleave = () => {
+    toTrashBtn.style.opacity = .6;
+}
 
 
 submitBtn.onmouseenter = () => {
@@ -33,6 +50,12 @@ submitBtn.onclick = () => {
     } else {
         alert("برجاء مراجعة البيانات \n علما بأن : \n*العمر من 3 سنوات ل90 سنه\n*وجميع الحقول مطلوبة ")
     }
+}
+
+toTrashBtn.onclick = () => {
+    localStorage.clear();
+    students = [];
+    dataperant.style.display = "none";
 }
 
 function goToQuiz() {
@@ -178,7 +201,6 @@ function showResult() {
     let dataperant = document.getElementById("result-div");
     let toExcelBtn = document.getElementById("toexcel");
     let dataTable = document.getElementById("result-show");
-    //let row = document.createElement("tr");
     if (dataperant !== null) {
         dataperant.style.display = "block";
     }
