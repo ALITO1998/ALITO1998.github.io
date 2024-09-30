@@ -53,9 +53,16 @@ submitBtn.onclick = () => {
 }
 
 toTrashBtn.onclick = () => {
-    localStorage.clear();
-    students = [];
-    dataperant.style.display = "none";
+    finishQuiz();
+}
+
+toArchiveBtn.onclick = () => {
+    let code = prompt("برجاء إدخال كود المسابقة");
+    if (code === null || code === "" || code === "students") {
+        alert("البيانات لم تسجل لوجود خطأ في كود المسابقة!");
+    } else {
+        addToArchive(code)
+    }
 }
 
 function goToQuiz() {
@@ -75,7 +82,7 @@ function rateCreation() {
 
     saveBtn.id = "finish";
     saveBtn.classList = "submit col-2";
-    saveBtn.innerText = "حفظ النتائج";
+    saveBtn.innerHTML = `حفظ النتائج <i class="fa - solid fa - floppy - disk"></i>`;
     saveBtn.onmouseenter = () => {
         saveBtn.style.opacity = 1;
     }
@@ -290,10 +297,19 @@ function setNumOfQuestion(value) {
     }
 }
 
-function addToResults(myJson) {
-    fs.writeFile('Result.json', myJson, (err) => {
-        if (err) throw err;
-        console.log('Replaced!')
+function addToArchive(code) {
+    if (localStorage.getItem(code) !== null) {
+        const oldData = JSON.parse(localStorage.getItem(code));
+        const data = [...oldData, ...students];
+        localStorage.setItem(code, JSON.stringify(data));
+    } else {
+        localStorage.setItem(code, localStorage.getItem("Students"))
     }
-    );
+    finishQuiz()
+}
+
+function finishQuiz() {
+    localStorage.removeItem("students");
+    students = [];
+    dataperant.style.display = "none";
 }
