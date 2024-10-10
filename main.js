@@ -11,7 +11,7 @@ let finish = false;
 let toArchiveBtn = document.getElementById("toArchive");
 let toTrashBtn = document.getElementById("toTrash");
 let dataperant = document.getElementById("result-div");
-
+let showArchiveBtn = document.getElementById("showArchiveBtn");
 
 if (localStorage.getItem("Students") !== null) {
     students = JSON.parse(localStorage.getItem("Students"));
@@ -312,4 +312,27 @@ function finishQuiz() {
     localStorage.removeItem("students");
     students = [];
     dataperant.style.display = "none";
+}
+
+
+showArchiveBtn.onmouseenter = () => {
+    showArchiveBtn.style.opacity = 1;
+}
+
+showArchiveBtn.onmouseleave = () => {
+    showArchiveBtn.style.opacity = .6;
+}
+
+showArchiveBtn.onclick = () => {
+    if (true) {
+        const archive = document.getElementById("archive");
+        archive.style.zIndex = 1;
+        archive.style.display = "block";
+        const allContainer = document.getElementsByClassName("container");
+        for (let i = 0; i < allContainer.length; i++) {
+            allContainer.item(i).classList.add("blur");
+        }
+
+    }
+
 }

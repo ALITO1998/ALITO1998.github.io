@@ -3,7 +3,9 @@ body {
   background-repeat: repeat-y;
   background-size: 100%;
   background-position-y: center;
+  direction: ltr;
 }
+
 .input {
   direction: rtl;
   padding: 1.5%;
@@ -14,10 +16,13 @@ body {
 }
 
 .submit {
+  position: relative;
+  z-index: 0;
+  min-width: 30%;
   background-color: green;
   border: none;
   border-radius: 1rem;
-  margin-right: 42%;
+  margin-right: 35%;
   margin-top: 2%;
   opacity: 0.6;
 }
@@ -37,4 +42,43 @@ body {
 
 #result-div {
   display: none;
+}
+
+.corner-button {
+  z-index: 2;
+  position: fixed;
+  background-color: green;
+  border: none;
+  border-radius: 1rem;
+  margin: 2% 2% 2% 0.5%;
+  padding: 2%;
+  opacity: 0.6;
+}
+
+#parent {
+  position: relative;
+  margin-left: 3.4%;
+}
+
+#archive {
+  display: none;
+  z-index: -2;
+  position: absolute;
+  top: 0;
+  width: 80%;
+  height: 85%;
+  border-radius: 1rem;
+  background-color: rgba(201, 201, 201, 0.9);
+  -webkit-border-radius: 1rem;
+  -moz-border-radius: 1rem;
+  -ms-border-radius: 1rem;
+  -o-border-radius: 1rem;
+  margin-top: 12%;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.blur {
+  -webkit-filter: blur(2px);
+  filter: blur(2px);
 }
